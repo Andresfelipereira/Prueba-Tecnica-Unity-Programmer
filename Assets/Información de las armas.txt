@@ -1,0 +1,3 @@
+Weapon 1 -> Disparo parabólico
+Weapon 2 -> Disparo de balas con capacidad de atracción de objetos
+Weapon 3 -> Disparo de balas con seguimiento de objetivo

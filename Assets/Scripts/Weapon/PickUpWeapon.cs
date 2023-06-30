@@ -12,27 +12,29 @@ public class PickUpWeapon : MonoBehaviour
     private void Start()
     {
        weapon.enabled = false;
+       GetComponent<Rigidbody>().isKinematic = false;
     }
 
     void Update()
     {
-        Vector3 distanceToPlayer = player.transform.position - transform.position;
-        if(distanceToPlayer.magnitude <= pickUpRange && !equipped && !player.GetComponent<PlayerManager>().GetWeaponEquipped())
+        if (!equipped)
         {
-            player.GetComponent<PlayerManager>().GetPlayerUIManager().ShowMessage("Press Z to grab weapon");
-            Debug.Log("Press Z to grab weapon");
-            if (Input.GetKeyDown("z"))
+            Vector3 distanceToPlayer = player.transform.position - transform.position;
+            if(distanceToPlayer.magnitude <= pickUpRange && !player.GetComponent<PlayerManager>().GetWeaponEquipped())
             {
-                PickUp();
-            } 
-               
-        }else if (distanceToPlayer.magnitude > pickUpRange && !equipped)
-        {
-            player.GetComponent<PlayerManager>().GetPlayerUIManager().ShowMessage("");
+                Debug.Log("Press Z to grab weapon");
+                if (Input.GetKeyDown("z"))
+                {
+                    PickUp();
+                }
+            }
         }
-        if(equipped && Input.GetKeyDown("x"))
+        else
         {
-            Drop();
+            if(Input.GetKeyDown("x"))
+            {
+                Drop();
+            }
         }
     }
 
@@ -40,19 +42,19 @@ public class PickUpWeapon : MonoBehaviour
     {
         equipped = true;
         weapon.enabled = true;
+        GetComponent<Rigidbody>().isKinematic = true;
         player.GetComponent<PlayerManager>().SetWeaponEquipped(true);
         transform.SetParent(player.transform);
         transform.localPosition = Vector3.zero+new Vector3(0.5f,0,1);
         transform.localRotation = Quaternion.Euler(Vector3.zero);
-        player.GetComponent<PlayerManager>().GetPlayerUIManager().ShowMessage("Press X to drop weapon");
     }
 
     public void Drop()
     {
         equipped = false;
         weapon.enabled = false;
+        GetComponent<Rigidbody>().isKinematic = false;
         player.GetComponent<PlayerManager>().SetWeaponEquipped(false);
-        player.GetComponent<PlayerManager>().GetPlayerUIManager().ShowMessage("");
         transform.SetParent(null);
         transform.localPosition = transform.localPosition + new Vector3(-0.5f, 0,0);
     }

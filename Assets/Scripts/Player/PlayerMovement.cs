@@ -14,29 +14,39 @@ public class PlayerMovement : MonoBehaviour
 
     void Update()
     {
-        if (Input.GetKey("up") || Input.GetKey("w"))
+        //Controles del jugador -> Movimiento
+        if (Input.GetKey("up"))
         {
             playerRigidBody.velocity = transform.forward * playerSpeed;
         }
-        if (Input.GetKey("down") || Input.GetKey("s"))
+        if (Input.GetKey("down"))
         {
             playerRigidBody.velocity = -transform.forward * playerSpeed;
         }
-        if (Input.GetKey("right") || Input.GetKey("d"))
+        if (Input.GetKey("right"))
         {
             playerRigidBody.velocity = transform.right * playerSpeed;
         }
-        if (Input.GetKey("left") || Input.GetKey("a"))
+        if (Input.GetKey("left"))
         {
             playerRigidBody.velocity = -transform.right * playerSpeed;
         }
-        if (Input.GetKey("q"))
+        //Controles del jugador -> Rotacion
+        if (Input.GetKey("a"))
         {
-            transform.Rotate(0, Time.deltaTime * -10f, 0);
+            transform.Rotate(0, Time.deltaTime * -20f, 0);
         }
-        if (Input.GetKey("e") || Input.GetKey("d"))
+        if (Input.GetKey("d"))
         {
-            transform.Rotate(0, Time.deltaTime * 10f, 0);
+            transform.Rotate(0, Time.deltaTime * 20f, 0);
+        }
+        if (Input.GetKey("w"))
+        {
+            transform.Rotate(Time.deltaTime * -20f,0, 0);
+        }
+        if (Input.GetKey("s"))
+        {
+            transform.Rotate(Time.deltaTime * 20f,0, 0);
         }
     }
 }

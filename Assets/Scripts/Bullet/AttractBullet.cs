@@ -4,19 +4,25 @@ using UnityEngine;
 
 public class AttractBullet : MonoBehaviour
 {
-    public float pullRadius = 2;
-    public float pullForce = 1;
+    //Radio de distancia entre la bala y los demas objetos sobre la cual se aplica la atraccion
+    public float _radius;
+    //Fuerza de atraccion
+    public float _force;
 
-    public void FixedUpdate()
+    public void Update()
     {
-        Collider[] colliders = Physics.OverlapSphere(transform.position, pullRadius);
+        //Se obtienen todos los elementos dentro del escenario dentro del radio establecido
+        Collider[] colliders = Physics.OverlapSphere(transform.position, _radius);
         foreach (Collider collider in colliders){
-            if(collider.gameObject.tag == "Untagged") {
+            Debug.Log(colliders.Length+ collider.gameObject.tag);
+            //La atraccion se aplica a todo GameObject cuyo tag es "Object" 
+            if(collider.gameObject.tag == "Object") {
+                
                 Rigidbody body = collider.GetComponent<Rigidbody>();
                 Vector3 forceDirection = transform.position - collider.transform.position;
                 float distance = forceDirection.magnitude;
                 forceDirection = forceDirection.normalized;
-                float forceRate = (pullForce / distance);
+                float forceRate = (_force / distance);
                 body.AddForce(forceDirection * (forceRate / body.mass));}
         }
     }
